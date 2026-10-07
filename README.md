@@ -80,6 +80,8 @@ Caso o Pages ainda não esteja habilitado:
 
 > Browser E2E automatizado no GitHub Actions foi adicionado em 07/10/2026. O que resta neste gate é validação publicada/real e revisão dos casos específicos listados abaixo.
 
+> Smoke de produção foi adicionado em 07/10/2026 para validar a integração externa sem misturar esse gate ao E2E mockado. O workflow precisa ficar verde antes de encerrar o MVP.
+
 ## V2 — somente após validação
 
 - memória por patch;
