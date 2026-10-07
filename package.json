@@ -1,7 +1,11 @@
 {
-  "name":"tft-augment-memory",
-  "private":true,
-  "scripts":{
-    "check":"node --check app.js && node --check backend-config.js && node --check static-page.js && node scripts/qa.mjs"
+  "name": "tft-augment-memory",
+  "private": true,
+  "scripts": {
+    "check": "node --check app.js && node --check backend-config.js && node --check static-page.js && node scripts/qa.mjs",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0"
   }
 }
