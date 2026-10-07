@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://helioconde.github.io/tft-augment-memory/sitemap.xml
