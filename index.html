@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b0d14">
+  <meta name="description" content="TFT Augment Memory organiza seus augments recentes por frequência, colocação, Top 4 e combinações pessoais.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TFT Augment Memory — seus augments, lembrados">
+  <meta property="og:description" content="Veja quais augments você mais escolhe, em quais resultados aparecem e com quais parceiros costuma combiná-los.">
+  <meta property="og:url" content="https://helioconde.github.io/tft-augment-memory/">
+  <link rel="canonical" href="https://helioconde.github.io/tft-augment-memory/">
+  <title>TFT Augment Memory — seus augments, lembrados</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-mark">AM</span><span>Augment <b>Memory</b></span></a>
+    <div class="top-actions">
+      <span class="source-pill" id="source-pill">DADOS RIOT</span>
+      <button class="ghost small" id="language-toggle" type="button" aria-label="Mudar idioma">EN</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero shell">
+      <div class="hero-copy">
+        <p class="eyebrow" data-i18n="eyebrow">TFT · HISTÓRICO PESSOAL</p>
+        <h1 data-i18n="heroTitle">Você lembra do augment. <span>Agora lembre do contexto.</span></h1>
+        <p data-i18n="heroText">Veja quais augments aparecem mais no seu histórico recente, como foram suas colocações e quais combinações você repetiu — sem confundir correlação pessoal com tier list.</p>
+
+        <form class="lookup" id="lookup-form">
+          <label class="riot-field">
+            <span data-i18n="riotId">Riot ID</span>
+            <input id="riot-id" name="riotId" placeholder="Nome#TAG" autocomplete="off" required>
+          </label>
+          <label>
+            <span data-i18n="server">Servidor</span>
+            <select id="server" name="server">
+              <option value="br1">BR</option><option value="na1">NA</option><option value="euw1">EUW</option>
+              <option value="eun1">EUNE</option><option value="kr">KR</option><option value="jp1">JP</option>
+              <option value="la1">LAN</option><option value="la2">LAS</option><option value="oc1">OCE</option>
+            </select>
+          </label>
+          <button class="primary" type="submit" data-i18n="search">Ver minha memória</button>
+        </form>
+
+        <div class="lookup-meta">
+          <span data-i18n="privacy">Consulta pública via backend gamer. Nenhuma chave Riot fica no navegador.</span>
+          <button class="text-button" id="recent-toggle" type="button" data-i18n="recent">Buscas recentes</button>
+        </div>
+        <div id="recent-searches" class="recent-searches" hidden></div>
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+      </div>
+
+      <aside class="hero-card">
+        <p class="eyebrow" data-i18n="memoryTitle">O QUE A MEMÓRIA GUARDA</p>
+        <div class="memory-preview">
+          <article><span>01</span><div><strong data-i18n="memory1">O que você repete</strong><small data-i18n="memory1Text">Frequência por augment no recorte.</small></div></article>
+          <article><span>02</span><div><strong data-i18n="memory2">Como terminou</strong><small data-i18n="memory2Text">Colocação média e taxa de Top 4.</small></div></article>
+          <article><span>03</span><div><strong data-i18n="memory3">Com quem combina</strong><small data-i18n="memory3Text">Parceiros de augment que reaparecem.</small></div></article>
+        </div>
+      </aside>
+    </section>
+
+    <section class="loading shell" id="loading" hidden>
+      <div class="spinner"></div>
+      <div><strong data-i18n="loadingTitle">Consultando seu histórico TFT…</strong><span data-i18n="loadingText">O backend pode usar cache e completar a amostra em etapas.</span></div>
+    </section>
+
+    <section class="result shell" id="result" hidden>
+      <div class="result-head">
+        <div>
+          <p class="eyebrow" data-i18n="analysis">MEMÓRIA DO JOGADOR</p>
+          <h2 id="player-name">—</h2>
+          <p id="sample-note" class="muted"></p>
+        </div>
+        <div class="period-tabs" role="group" aria-label="Período">
+          <button class="period" data-period="week" type="button">7D</button>
+          <button class="period active" data-period="month" type="button">30D</button>
+          <button class="period" data-period="set" type="button" data-i18n="currentSet">Set atual</button>
+        </div>
+      </div>
+
+      <section class="metrics">
+        <article><span data-i18n="games">Partidas</span><strong id="metric-games">—</strong><small data-i18n="gamesHelp">no recorte</small></article>
+        <article><span data-i18n="unique">Augments únicos</span><strong id="metric-unique">—</strong><small data-i18n="uniqueHelp">escolhas diferentes</small></article>
+        <article><span data-i18n="mostPicked">Mais escolhido</span><strong id="metric-most">—</strong><small id="metric-most-note">—</small></article>
+        <article><span data-i18n="bestAvg">Melhor média</span><strong id="metric-best">—</strong><small data-i18n="bestAvgHelp">mín. 2 usos</small></article>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel augment-panel">
+          <div class="panel-head">
+            <div><p class="eyebrow" data-i18n="library">SUA BIBLIOTECA</p><h3 data-i18n="libraryTitle">Augments do período</h3></div>
+            <div class="sort-group">
+              <button class="sort active" type="button" data-sort="count" data-i18n="sortFreq">Frequência</button>
+              <button class="sort" type="button" data-sort="avg" data-i18n="sortAvg">Média</button>
+              <button class="sort" type="button" data-sort="top4">Top 4</button>
+            </div>
+          </div>
+          <div id="augment-grid" class="augment-grid"></div>
+        </section>
+
+        <aside class="panel detail-panel">
+          <div class="panel-head"><div><p class="eyebrow" data-i18n="detail">DETALHE</p><h3 id="detail-title" data-i18n="selectAugment">Escolha um augment</h3></div></div>
+          <div id="augment-detail" class="augment-detail empty"></div>
+          <div class="ad-slot"><span data-i18n="ad">PUBLICIDADE</span><small data-i18n="adNote">espaço reservado · fora da análise principal</small></div>
+        </aside>
+      </section>
+
+      <section class="panel timeline-panel">
+        <div class="panel-head">
+          <div><p class="eyebrow" data-i18n="timeline">LINHA DO TEMPO</p><h3 data-i18n="timelineTitle">Augments por partida</h3></div>
+          <span id="timeline-count" class="muted"></span>
+        </div>
+        <div id="timeline-list" class="timeline-list"></div>
+      </section>
+
+      <section class="method">
+        <div><p class="eyebrow" data-i18n="methodEyebrow">COMO LER</p><h3 data-i18n="methodTitle">Histórico pessoal não é tier list.</h3></div>
+        <p data-i18n="methodText">A colocação média mostra o que aconteceu nas suas partidas com aquele augment. Ela não prova que o augment causou o resultado e não substitui contexto de patch, comp, lobby ou itemização.</p>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer shell">
+    <div><strong>TFT Augment Memory</strong><span data-i18n="riotDisclaimer">Produto independente. Teamfight Tactics e Riot Games são marcas da Riot Games, Inc.</span></div>
+    <nav><a href="sobre.html" data-i18n="about">Sobre</a><a href="privacidade.html" data-i18n="privacyLink">Privacidade</a><a href="termos.html" data-i18n="terms">Termos</a></nav>
+  </footer>
+
+  <script src="backend-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
