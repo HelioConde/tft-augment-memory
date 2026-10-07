@@ -70,12 +70,15 @@ Caso o Pages ainda não esteja habilitado:
 - [x] páginas institucionais;
 - [x] QA estático;
 - [ ] GitHub Pages confirmado;
-- [ ] Browser E2E;
+- [x] Browser E2E;
 - [ ] validar com 3+ Riot IDs;
 - [ ] validar contas com poucos jogos;
 - [ ] validar nomes reais de augments;
 - [ ] revisar 404/429/timeout;
 - [ ] revisar desktop/mobile publicado.
+
+
+> Browser E2E automatizado no GitHub Actions foi adicionado em 07/10/2026. O que resta neste gate é validação publicada/real e revisão dos casos específicos listados abaixo.
 
 ## V2 — somente após validação
 
