@@ -1,4 +1,12 @@
-# TFT Augment Memory
+# TFT Augment Memory — Seu histórico de aprimoramentos
+
+**Revise como os aprimoramentos aparecem nas suas partidas recentes de Teamfight Tactics.**
+
+**Recursos do MVP:** busca por Riot ID, frequência por augment, colocação média, taxa de Top 4, combinações recorrentes e visualizações por período.
+
+> Os resultados descrevem a amostra disponível. Um augment associado a boas colocações não é necessariamente a causa do resultado nem uma recomendação universal.
+
+---
 
 Produto TFT do **Ideias IA Lab** para transformar o histórico recente de augments em memória pessoal útil.
 
