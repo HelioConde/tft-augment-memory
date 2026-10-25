@@ -1,111 +1,48 @@
-# TFT Augment Memory — Seu histórico de aprimoramentos
+<div align="center">
+  <h1>🧩 TFT Augment Memory</h1>
+  <p><strong>Revise os aprimoramentos que apareceram nas suas partidas recentes de Teamfight Tactics.</strong></p>
+  <p><img alt="Status" src="https://img.shields.io/badge/status-MVP%20em%20valida%C3%A7%C3%A3o-64748b"></p>
+</div>
 
-**Revise como os aprimoramentos aparecem nas suas partidas recentes de Teamfight Tactics.**
+## O que a ferramenta mostra
 
-**Recursos do MVP:** busca por Riot ID, frequência por augment, colocação média, taxa de Top 4, combinações recorrentes e visualizações por período.
+Pesquise pelo Riot ID e visualize o histórico de **augments** da sua própria conta, com indicadores como frequência, colocação média, Top 4, última aparição e combinações recorrentes.
 
-> Os resultados descrevem a amostra disponível. Um augment associado a boas colocações não é necessariamente a causa do resultado nem uma recomendação universal.
+| Painel | Leitura |
+| --- | --- |
+| Frequência | Quantas vezes um augment aparece no recorte |
+| Resultados | Colocação média e porcentagem de Top 4 |
+| Combinações | Aprimoramentos encontrados juntos |
+| Linha do tempo | Aparições por partida consultada |
+| Período | Filtros de 7 dias, 30 dias e Set |
+| Histórico de busca | Riot ID e filtros locais |
 
----
+O frontend depende do endpoint gamer configurado em `backend-config.js`; **a chave privada Riot não fica no navegador**. Se o backend não responder, informações reais podem estar indisponíveis.
 
-Produto TFT do **Ideias IA Lab** para transformar o histórico recente de augments em memória pessoal útil.
+## Como interpretar
 
-## Estado atual
+O produto reúne **seu histórico pessoal**, não uma classificação universal de melhores augments. Um aprimoramento associado a partidas bem colocadas pode refletir composição, economia, patch, lobby e decisões, sem ser a causa do resultado.
 
-MVP funcional iniciado em 07/10/2026.
+**Períodos são filtros sobre a amostra recuperada**, não acesso ilimitado ao histórico completo.
 
-## O que já funciona
+## Executar localmente
 
-- busca por Riot ID + servidor;
-- backend gamer compartilhado via \`riot-legacy-tft-profile\`;
-- períodos de 7 dias, 30 dias e Set atual;
-- frequência por augment;
-- colocação média;
-- taxa de Top 4;
-- última aparição;
-- combinações/parceiros mais recorrentes;
-- ordenação por frequência, média e Top 4;
-- detalhe de augment;
-- linha do tempo por partida;
-- buscas recentes em localStorage;
-- deep link com Riot ID, servidor e período;
-- PT-BR principal + inglês;
-- páginas Sobre, Privacidade e Termos;
-- mobile;
-- SEO básico;
-- espaço preparado para anúncios;
-- Static QA.
+```bash
+git clone https://github.com/HelioConde/tft-augment-memory.git
+cd tft-augment-memory
+python -m http.server 8000
+```
 
-## Interpretação
+Acesse `http://localhost:8000`. Para testes:
 
-O produto é um **histórico pessoal**, não uma tier list.
+```bash
+npm install
+npm run check
+npm run test:e2e
+```
 
-Colocação média e Top 4 descrevem apenas a amostra do jogador. Elas não provam que o augment causou o resultado e devem ser lidas junto de patch, comp, lobby, itens e decisões.
+## Situação atual
 
-## Backend
+**MVP implementado e em validação.** A prioridade é conferir resultados em contas e dispositivos adicionais, garantir amostras claras e manter os dados alinhados às limitações da Riot API.
 
-Fonte:
-
-\`https://bieihhaobdztjyoweewa.supabase.co/functions/v1/riot-legacy-tft-profile\`
-
-A integração Riot continua server-side.
-
-## QA
-
-Execute:
-
-\`npm run check\`
-
-## Deploy
-
-O workflow **Deploy GitHub Pages** está preparado.
-
-Caso o Pages ainda não esteja habilitado:
-
-1. Settings → Pages
-2. Build and deployment
-3. Source → GitHub Actions
-
-## Gate antes de expandir
-
-- [x] proposta de valor clara;
-- [x] histórico real de TFT;
-- [x] fluxo principal;
-- [x] 7D / 30D / Set;
-- [x] detalhe de augment;
-- [x] PT-BR/EN;
-- [x] mobile;
-- [x] páginas institucionais;
-- [x] QA estático;
-- [ ] GitHub Pages confirmado;
-- [x] Browser E2E;
-- [ ] validar com 3+ Riot IDs;
-- [ ] validar contas com poucos jogos;
-- [ ] validar nomes reais de augments;
-- [ ] revisar 404/429/timeout;
-- [ ] revisar desktop/mobile publicado.
-
-
-> Browser E2E automatizado no GitHub Actions foi adicionado em 07/10/2026. O que resta neste gate é validação publicada/real e revisão dos casos específicos listados abaixo.
-
-> Smoke de produção foi adicionado em 07/10/2026 para validar a integração externa sem misturar esse gate ao E2E mockado. O workflow precisa ficar verde antes de encerrar o MVP.
-
-## V2 — somente após validação
-
-- memória por patch;
-- busca por augment;
-- comparação entre dois augments;
-- evolução ao longo do tempo;
-- filtros por comp/trait;
-- card compartilhável;
-- sincronização de favoritos/notas.
-
-## Compliance
-
-Produto independente e não endossado pela Riot Games.
-
-Teamfight Tactics e Riot Games são marcas de seus respectivos titulares.
-
-Planejamento geral:
-
-https://github.com/HelioConde/ideias-ia-lab
+Projeto não oficial, sem afiliação à Riot Games. Desenvolvido por [Hélio Conde](https://github.com/HelioConde).
